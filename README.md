@@ -35,11 +35,26 @@
     <a href="#2-nodejs-best-practices">2. TailwindCSS Best Practices</a>
   </summary>
 
+&emsp;&emsp;[2.1 Compose custom classes for re-usable components](#21-compose-custom-classes-for-re-usable-components)</br>
+&emsp;&emsp;[2.2 Keep fewer Utility classes](#22-keep-fewer-utility-classes)</br>
+&emsp;&emsp;[2.3 Don't use string concatenation to create class names](#23-dont-use-string-concatenation-to-create-class-names)</br>
+&emsp;&emsp;[2.4 Don't use the margin on every child](#24-dont-use-the-margin-on-every-child)</br>
+&emsp;&emsp;[2.5 Define custom colors](#24-define-custom-colors)</br>
+
 </details>
 <details>
   <summary>
     <a href="#3-nodejs-best-practices">3. NodeJS Best Practices</a>
   </summary>
+
+</details>
+<details>
+  <summary>
+    <a href="#4-best-third-party-libraries">4. Best Third-party Libraries</a>
+  </summary>
+
+&emsp;&emsp;[4.1 HeadlessUI](#41-headlessui)</br>
+&emsp;&emsp;[4.2 React Icons](#41-react-icons)</br>
 
 </details>
 
@@ -624,6 +639,177 @@ const sampleComponent = () => {
   return isTrue && <p>True!</p>;
 };
 ```
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+<br/>
+<hr />
+<br/>
+
+# `2. TailwindCSS Best Practices`
+
+## `2.1 Compose custom classes for re-usable components`
+
+Let's say you have a style for the button that you are going to use in multiple places accros your web application, so instead of writing long tailwind classes each time, you can just combine all of them into a new custom class using the `@apply` directive.
+
+**Bad:**
+
+```jsx
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Text Here</button>
+```
+
+**Good:**
+
+`App.css:`
+
+```css
+.custom-button {
+  @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+}
+```
+
+`App.tsx:`
+
+```jsx
+<button class="custom-button">Text Here</button>
+```
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## `2.2 Keep fewer Utility classes`
+
+Utility classes allow you to write responsive web pages without CSS, but sometimes users use multiple utility classes. The best practice is to keep your code as short as possible with all the functionalities. Users should avoid using multiple utility classes.
+
+**Bad:**
+
+```jsx
+<div class="mx-10 md:mx-20 lg:mx-32 xl:mx-44 2xl: mx-64"></div>
+```
+
+**Good:**
+
+```jsx
+<div class="max-w-lg mx-auto"></div>
+```
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## `2.3 Don't use string concatenation to create class names`
+
+Tailwind uses PurgeCSS, which deletes or removes all the unused classes in production. It is done to keep the CSS file as small as possible. Due to this, Concatenated strings are not picked up. To avoid this, dynamically select the complete class name.
+
+**Bad:**
+
+```jsx
+<div className=`text-${ error ? "red" : "green" }-400`></div>
+```
+
+**Good:**
+
+```jsx
+<div className=`${error ? "text-red-400" : "text-green-400"}`></div>
+```
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## `2.4 Don't use the margin on every child`
+
+If you have multiple child classes, instead of specifying margins or gaps to every child, provide specific utility classes to the parent class.
+
+**Bad:**
+
+```jsx
+<div>
+  <div class="mb-2 mt-2"></div>
+  <div class="mb-2 mt-2"></div>
+  <div class="mb-2 mt-2"></div>
+  <div class="mb-2 mt-2"></div>
+  <div class="mb-2 mt-2"></div>
+</div>
+```
+
+**Good:**
+
+```jsx
+<div class="space-y-4">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+```
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## `2.5 Define custom colors`
+
+You should always define the main colors of your design (primary color, secondary color, accent color..) in your `tailwind.config.js` file:
+
+So instead of writing the hex color code each time, you can just give it a name:
+
+**Bad:**
+
+```jsx
+<div className="text-[#38BDF8]"></div>
+```
+
+**Good:**
+
+`tailwind.config.js`
+
+```js
+module.exports = {
+  theme: {
+    colors: {
+      primary: "#38BDF8",
+      // ...
+    },
+  },
+};
+```
+
+`App.tsx`
+
+```jsx
+<div className="text-primary"></div>
+```
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+<br/>
+<hr />
+<br/>
+
+# `4. Best Third-party Libraries`
+
+## `4.1 HeadlessUI`
+
+Completely unstyled, fully accessible UI components, designed to integrate beautifully with Tailwind CSS.
+
+<a href="https://headlessui.com/">https://headlessui.com/</a>
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## `4.2 React Icons`
+
+Include popular icons in your React projects easily with react-icons, which utilizes ES6 imports that allows you to include only the icons that your project is using.
+
+<a href="https://react-icons.github.io/react-icons/">https://react-icons.github.io/react-icons/</a>
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
